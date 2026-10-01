@@ -1,0 +1,246 @@
+{
+  "most_negative": [
+    {
+      "term": "boring",
+      "coef": -6.852
+    },
+    {
+      "term": "useless",
+      "coef": -5.92
+    },
+    {
+      "term": "dry",
+      "coef": -4.494
+    },
+    {
+      "term": "hated",
+      "coef": -4.47
+    },
+    {
+      "term": "awful",
+      "coef": -4.404
+    },
+    {
+      "term": "waste",
+      "coef": -4.337
+    },
+    {
+      "term": "worst",
+      "coef": -3.968
+    },
+    {
+      "term": "not fun",
+      "coef": -3.966
+    },
+    {
+      "term": "don take",
+      "coef": -3.928
+    },
+    {
+      "term": "waste of",
+      "coef": -3.881
+    },
+    {
+      "term": "horrible",
+      "coef": -3.872
+    },
+    {
+      "term": "not my",
+      "coef": -3.847
+    },
+    {
+      "term": "didn",
+      "coef": -3.698
+    },
+    {
+      "term": "not",
+      "coef": -3.661
+    },
+    {
+      "term": "poorly",
+      "coef": -3.558
+    },
+    {
+      "term": "not recommend",
+      "coef": -3.526
+    },
+    {
+      "term": "nightmare",
+      "coef": -3.369
+    },
+    {
+      "term": "stupid",
+      "coef": -3.295
+    },
+    {
+      "term": "boring course",
+      "coef": -3.275
+    },
+    {
+      "term": "bland",
+      "coef": -3.179
+    },
+    {
+      "term": "definitely not",
+      "coef": -3.073
+    },
+    {
+      "term": "whoever",
+      "coef": -3.004
+    },
+    {
+      "term": "terribly",
+      "coef": -2.967
+    },
+    {
+      "term": "not very",
+      "coef": -2.93
+    },
+    {
+      "term": "ambiguous",
+      "coef": -2.87
+    },
+    {
+      "term": "avoid",
+      "coef": -2.836
+    },
+    {
+      "term": "no",
+      "coef": -2.836
+    },
+    {
+      "term": "ridiculous",
+      "coef": -2.836
+    },
+    {
+      "term": "however the",
+      "coef": -2.804
+    },
+    {
+      "term": "failed",
+      "coef": -2.797
+    }
+  ],
+  "most_positive": [
+    {
+      "term": "interesting",
+      "coef": 7.733
+    },
+    {
+      "term": "fun",
+      "coef": 6.803
+    },
+    {
+      "term": "great",
+      "coef": 6.006
+    },
+    {
+      "term": "amazing",
+      "coef": 4.767
+    },
+    {
+      "term": "loved",
+      "coef": 4.665
+    },
+    {
+      "term": "good",
+      "coef": 4.614
+    },
+    {
+      "term": "easy",
+      "coef": 4.162
+    },
+    {
+      "term": "great course",
+      "coef": 4.16
+    },
+    {
+      "term": "enjoyed",
+      "coef": 4.134
+    },
+    {
+      "term": "awesome",
+      "coef": 3.951
+    },
+    {
+      "term": "interesting course",
+      "coef": 3.95
+    },
+    {
+      "term": "not hard",
+      "coef": 3.758
+    },
+    {
+      "term": "easiest",
+      "coef": 3.746
+    },
+    {
+      "term": "liked",
+      "coef": 3.707
+    },
+    {
+      "term": "best",
+      "coef": 3.574
+    },
+    {
+      "term": "not too",
+      "coef": 3.366
+    },
+    {
+      "term": "you",
+      "coef": 3.208
+    },
+    {
+      "term": "loved this",
+      "coef": 3.182
+    },
+    {
+      "term": "enjoyable",
+      "coef": 3.172
+    },
+    {
+      "term": "cool",
+      "coef": 3.054
+    },
+    {
+      "term": "recommend this",
+      "coef": 3.05
+    },
+    {
+      "term": "fun course",
+      "coef": 3.029
+    },
+    {
+      "term": "really interesting",
+      "coef": 3.018
+    },
+    {
+      "term": "school calculus",
+      "coef": 2.923
+    },
+    {
+      "term": "each",
+      "coef": 2.878
+    },
+    {
+      "term": "rewarding",
+      "coef": 2.859
+    },
+    {
+      "term": "not bad",
+      "coef": 2.839
+    },
+    {
+      "term": "enjoyed this",
+      "coef": 2.833
+    },
+    {
+      "term": "engaging",
+      "coef": 2.812
+    },
+    {
+      "term": "fantastic",
+      "coef": 2.809
+    }
+  ]
+}

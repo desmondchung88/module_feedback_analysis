@@ -1,0 +1,100 @@
+{
+  "dataset": {
+    "file": "course_data_clean.csv",
+    "rows_usable": 14156,
+    "label_source": "course_rating_int (1 = liked, 0 = disliked)",
+    "label_caveat": "A proxy for sentiment: it reflects overall course liking, not the polarity of the individual comment.",
+    "split": {
+      "method": "stratified random",
+      "test_size": 0.2,
+      "seed": 42
+    },
+    "deduplicated": true,
+    "min_review_chars": 15
+  },
+  "baseline": {
+    "model": "majority_baseline",
+    "accuracy": 0.6730225988700564,
+    "macro_f1": 0.4022794428028704,
+    "per_class": {
+      "disliked": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "liked": {
+        "precision": 0.6730225988700564,
+        "recall": 1.0,
+        "f1": 0.8045588856057408
+      }
+    },
+    "confusion_matrix": [
+      [
+        0,
+        926
+      ],
+      [
+        0,
+        1906
+      ]
+    ]
+  },
+  "full_model": {
+    "model": "tfidf_logreg_full",
+    "accuracy": 0.7944915254237288,
+    "macro_f1": 0.7701266641934468,
+    "per_class": {
+      "disliked": {
+        "precision": 0.6747967479674797,
+        "recall": 0.7170626349892009,
+        "f1": 0.6952879581151833
+      },
+      "liked": {
+        "precision": 0.8582251082251082,
+        "recall": 0.832109129066107,
+        "f1": 0.8449653702717101
+      }
+    },
+    "confusion_matrix": [
+      [
+        664,
+        262
+      ],
+      [
+        320,
+        1586
+      ]
+    ],
+    "roc_auc": 0.8548238596316281,
+    "n_features": 27575
+  },
+  "compact_model_exported_to_app": {
+    "model": "tfidf_logreg_compact",
+    "accuracy": 0.7856638418079096,
+    "macro_f1": 0.7610456463166305,
+    "per_class": {
+      "disliked": {
+        "precision": 0.6599799398194583,
+        "recall": 0.7105831533477321,
+        "f1": 0.6843473738949558
+      },
+      "liked": {
+        "precision": 0.8539509536784741,
+        "recall": 0.8221406086044072,
+        "f1": 0.8377439187383052
+      }
+    },
+    "confusion_matrix": [
+      [
+        658,
+        268
+      ],
+      [
+        339,
+        1567
+      ]
+    ],
+    "roc_auc": 0.8466970281412115,
+    "n_features": 6000
+  }
+}

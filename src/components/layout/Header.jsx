@@ -4,6 +4,7 @@ import { useAuth } from '../../auth/useAuth.js';
 import { ROLE_LABEL } from '../../auth/navigation.js';
 import { config } from '../../config.js';
 import { getDevSettings, setDevSettings } from '../../mock/devSettings.js';
+import { isSeedEnabled, setSeedEnabled } from '../../mock/db.js';
 
 function initials(name) {
   return name.split(' ').filter(Boolean).slice(-2).map((p) => p[0]).join('').toUpperCase();
@@ -13,6 +14,7 @@ export default function Header({ onMenuClick }) {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [simulateErrors, setSimulateErrors] = useState(() => getDevSettings().simulateErrors);
+  const [seedOn, setSeedOn] = useState(() => isSeedEnabled());
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -83,6 +85,15 @@ export default function Header({ onMenuClick }) {
             {config.apiMode === 'mock' && (
               <div className="border-b border-slate-100 px-4 py-3">
                 <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Developer tools</p>
+                <label className="mt-2 flex cursor-pointer items-center justify-between gap-3 text-sm text-slate-700">
+                  Synthetic demo data
+                  <input
+                    type="checkbox"
+                    checked={seedOn}
+                    onChange={() => { setSeedEnabled(!seedOn); setSeedOn(!seedOn); window.location.reload(); }}
+                    className="size-4 accent-navy-900"
+                  />
+                </label>
                 <label className="mt-2 flex cursor-pointer items-center justify-between gap-3 text-sm text-slate-700">
                   Simulate API errors
                   <input type="checkbox" checked={simulateErrors} onChange={toggleErrors} className="size-4 accent-navy-900" />

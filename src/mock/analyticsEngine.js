@@ -88,7 +88,7 @@ export function detectTrend(items) {
 
 // Per-theme rows for the theme table. Themes below the privacy threshold keep
 // their count but lose every breakdown.
-export function themeBreakdown(items, themes, { trendItems = items } = {}) {
+export function themeBreakdown(items, themes, { trendItems = items, withTrend = true } = {}) {
   return themes
     .map((theme) => {
       const inTheme = items.filter((i) => i.themeId === theme.themeId);
@@ -102,7 +102,7 @@ export function themeBreakdown(items, themes, { trendItems = items } = {}) {
         suppressed,
         counts: suppressed ? null : counts,
         pcts: suppressed ? null : pcts,
-        trend: suppressed ? null : detectTrend(totalForTheme),
+        trend: suppressed || !withTrend ? null : detectTrend(totalForTheme),
       };
     })
     .filter((row) => row.count > 0)

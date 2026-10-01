@@ -15,6 +15,7 @@ const LecturerDashboard = lazy(() => import('./pages/lecturer/LecturerDashboard.
 const ModuleAnalyticsPage = lazy(() => import('./pages/lecturer/ModuleAnalyticsPage.jsx'));
 const ThemeDetailPage = lazy(() => import('./pages/lecturer/ThemeDetailPage.jsx'));
 const FeedbackExplorerPage = lazy(() => import('./pages/lecturer/FeedbackExplorerPage.jsx'));
+const ImportPage = lazy(() => import('./pages/lecturer/ImportPage.jsx'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard.jsx'));
 
 function HomeRedirect() {
@@ -40,6 +41,7 @@ export default function App() {
             <Route path="/lecturer/modules/:moduleId" element={<ModuleAnalyticsPage />} />
             <Route path="/lecturer/modules/:moduleId/themes/:themeId" element={<ThemeDetailPage />} />
             <Route path="/lecturer/explorer" element={<FeedbackExplorerPage />} />
+            <Route path="/lecturer/import" element={<ImportPage />} />
           </Route>
 
           <Route element={<RequireRole roles={['admin']} />}>

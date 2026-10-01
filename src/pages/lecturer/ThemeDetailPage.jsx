@@ -92,18 +92,23 @@ export default function ThemeDetailPage() {
           <KpiCard label="Negative sentiment" value={`${formatPct(sentiment.pcts.negative)} Negative`} accent="red"
             detail={`${formatPct(sentiment.pcts.positive)} positive, ${formatPct(sentiment.pcts.neutral)} neutral`}
             tooltip="Share of comments on this theme that the sentiment model classified as negative." />
-          <KpiCard label="Trend" value={<span className="flex items-center gap-2"><TrendBadge direction={trend.direction} /></span>}
-            accent={TREND_ACCENT[trend.direction]} icon={TREND_ICON[trend.direction]} detail={trend.description}
-            tooltip="Finds the week where negative sentiment changed most, and reports it only if the change is large and unlikely to be noise." />
+          {trend ? (
+            <KpiCard label="Trend" value={<span className="flex items-center gap-2"><TrendBadge direction={trend.direction} /></span>}
+              accent={TREND_ACCENT[trend.direction]} icon={TREND_ICON[trend.direction]} detail={trend.description}
+              tooltip="Finds the week where negative sentiment changed most, and reports it only if the change is large and unlikely to be noise." />
+          ) : (
+            <KpiCard label="Trend" value="Not available" accent="navy" detail="This dataset has no teaching-week column" />
+          )}
         </div>
 
-        {trend.direction !== 'stable' && (
+        {trend && trend.direction !== 'stable' && (
           <p className={`rounded-lg px-4 py-3 text-sm font-medium ${trend.direction === 'increasing' ? 'bg-negative-soft text-negative-ink' : 'bg-positive-soft text-positive-ink'}`}>
             {trend.description}.
             {trend.direction === 'increasing' && ' Review the comments below to see what changed.'}
           </p>
         )}
 
+        {data.hasWeeks !== false && (
         <Card>
           <CardHeader
             title="Weekly sentiment trend"
@@ -111,9 +116,10 @@ export default function ThemeDetailPage() {
             tooltip="Each bar is one teaching week. The dashed line marks the week where the trend change was detected."
           />
           <div className="p-4 sm:p-5">
-            <WeeklySentimentBars data={data.weekly} markWeek={trend.sinceWeek} />
+            <WeeklySentimentBars data={data.weekly} markWeek={trend?.sinceWeek} />
           </div>
         </Card>
+        )}
 
         <Card>
           <CardHeader

@@ -5,6 +5,7 @@ import { useAsync } from '../../hooks/useAsync.js';
 import { getModules } from '../../services/moduleService.js';
 import { formatDate, formatPct } from '../../utils/format.js';
 import PageHeader from '../../components/layout/PageHeader.jsx';
+import Button from '../../components/ui/Button.jsx';
 import { Card } from '../../components/ui/Card.jsx';
 import { Badge, PeriodStatusBadge } from '../../components/ui/Badges.jsx';
 import { CardSkeleton, LoadingRegion } from '../../components/ui/Skeleton.jsx';
@@ -62,7 +63,13 @@ export default function LecturerDashboard() {
       {error && <ApiErrorView error={error} onRetry={retry} title="Unable to load your modules." />}
 
       {data && data.length === 0 && (
-        <Card><EmptyState title="No modules assigned" message="You are not listed as a lecturer on any module this trimester." /></Card>
+        <Card>
+          <EmptyState
+            title="No feedback data loaded"
+            message="Import a CSV of student comments to populate these dashboards, or switch on the synthetic demo data from the account menu."
+            action={<Button to="/lecturer/import">Import a CSV</Button>}
+          />
+        </Card>
       )}
 
       {data && data.length > 0 && (

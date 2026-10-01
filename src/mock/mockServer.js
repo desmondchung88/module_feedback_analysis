@@ -206,10 +206,13 @@ function getAnalytics({ user, params, query }) {
   }
 
   // Week + theme drive the headline numbers; sentiment narrows trends and comments.
+  // A dataset imported from a CSV may carry no teaching week. Reporting a
+  // weekly chart of zeros would be misleading, so it is omitted instead.
+  const hasWeeks = items.some((i) => Number.isFinite(i.week));
   const scoped = applyFilters(items, { week: filters.week, themeId: filters.themeId });
   const byWeek = applyFilters(items, { week: filters.week });
   const commentPool = applyFilters(scoped, { sentiment: filters.sentiment }).filter((i) => !hiddenThemes.has(i.themeId));
-  const themes = themeBreakdown(byWeek, db.themes, { trendItems: items });
+  const themes = themeBreakdown(byWeek, db.themes, { trendItems: items, withTrend: hasWeeks });
 
   return ok({
     ...header,
@@ -219,7 +222,8 @@ function getAnalytics({ user, params, query }) {
     sentiment: sentimentSummary(scoped),
     mostDiscussedTheme: themes.find((t) => !t.suppressed) ?? null,
     themes,
-    weekly: weeklySeries(applyFilters(items, { themeId: filters.themeId }), db.term.currentWeek),
+    hasWeeks,
+    weekly: hasWeeks ? weeklySeries(applyFilters(items, { themeId: filters.themeId }), db.term.currentWeek) : null,
     comments: representativeComments(commentPool, 6).map(toPublicComment),
     commentCount: commentPool.length,
   });
@@ -239,12 +243,14 @@ function getThemeDetail({ user, params }) {
   if (items.length === 0) return ok({ ...header, empty: true });
   if (!meetsPrivacyThreshold(items.length)) return ok({ ...header, ...privacyBlock(items.length), scope: 'theme' });
 
+  const themeHasWeeks = items.some((i) => Number.isFinite(i.week));
   return ok({
     ...header,
     suppressed: false,
+    hasWeeks: themeHasWeeks,
     sentiment: sentimentSummary(items),
-    trend: detectTrend(items),
-    weekly: weeklySeries(items, db.term.currentWeek),
+    trend: themeHasWeeks ? detectTrend(items) : null,
+    weekly: themeHasWeeks ? weeklySeries(items, db.term.currentWeek) : null,
     comments: representativeComments(items, 6).map(toPublicComment),
   });
 }

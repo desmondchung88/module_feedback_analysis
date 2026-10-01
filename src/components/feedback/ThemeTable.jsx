@@ -58,7 +58,7 @@ export default function ThemeTable({ rows, moduleId, selectedThemeId }) {
                     <td className="px-3 py-3 text-right tabular-nums">{formatPct(row.pcts.neutral)}</td>
                     <td className="px-3 py-3 text-right font-medium tabular-nums">{formatPct(row.pcts.negative)}</td>
                     <td className="px-3 py-3"><MixBar pcts={row.pcts} /></td>
-                    <td className="px-3 py-3"><TrendBadge direction={row.trend.direction} /></td>
+                    <td className="px-3 py-3">{row.trend ? <TrendBadge direction={row.trend.direction} /> : <span className="text-xs text-slate-400">no week data</span>}</td>
                   </>
                 )}
                 <td className="px-3 py-3 text-right">

@@ -112,6 +112,50 @@ What the prototype models, ready for the real backend:
 - **Input validation**: shared rules in `utils/validation.js` give instant feedback in the form and are re-checked by the server (length 10–2000, known categories, rating 1–5 or empty).
 - **Deployment**: serve over HTTPS only. For an SPA on S3/CloudFront or behind an ALB/nginx, route unknown paths to `index.html`.
 
+## Analytics: CSV import and the AI features
+
+Lecturers can upload a CSV of free-text comments (**Import & Analyse**) and get
+a classified, ranked view of it. The file is read in the browser; nothing is
+uploaded in mock mode.
+
+| Feature | How it works | Why it helps |
+|---|---|---|
+| **Name scrubbing** | Titles + names, emails, URLs, and rare predominantly-capitalised tokens are masked *before* any analysis | Instructor names are personal data; nothing downstream ever sees them |
+| **Sentiment** | TF-IDF (1–2 grams) + Logistic Regression, trained offline in `analytics/train_sentiment.py`, weights exported to JSON and run in the browser | **macro-F1 0.761** vs a **0.402** majority baseline (accuracy 0.79) |
+| **Themes** | Transparent seeded-keyword classifier over 8 themes, returning the matched terms | The dataset has no theme labels, so a supervised model could not be evaluated honestly |
+| **Driver terms** | Log-odds ratio with smoothing: terms unusually common in a theme's negative comments | Plain counts return "course" and "assignment" for every theme |
+| **Near-duplicate grouping** | Jaccard similarity over token sets with an inverted index | One complaint restated 20 times is one issue, not twenty |
+| **Priority ranking** | `log(negative comments) × (severity² + breadth)`, severity relative to the dataset average | The prescriptive layer: what to fix first, with the reasons shown |
+| **Label cross-check** | If the CSV has a label column, reports agreement with the model | An independent sanity check on the classifier |
+
+### Retraining the model
+
+```bash
+pip install scikit-learn pandas
+python analytics/train_sentiment.py --csv data/raw/course_data_clean.csv
+```
+
+Writes `analytics/results/metrics.json`, `analytics/results/top_terms.json` and
+`src/analysis/sentiment-model.json` (the weights the app loads).
+
+### Known limitations
+
+- The training label (`course_rating_int`) is a **proxy**: it records whether the
+  student liked the course overall, not the polarity of the individual comment.
+- Trained on University of Waterloo course reviews; performance on local module
+  feedback is unvalidated.
+- Name masking is heuristic. It over-masks some technical vocabulary
+  (e.g. "Taylor", "Schrodinger") and will miss some names. Spot-audit a sample.
+- Theme classification is keyword-based; roughly a third of comments match no
+  theme and are reported openly as *Unclassified* rather than hidden.
+
+### Where this runs later
+
+`src/analysis/*` is dependency-free and has no DOM access, so the same modules
+run server-side once the backend exists. The boundary is already API-shaped:
+`POST /api/datasets` and `GET /api/datasets/:id/insights` in
+`src/services/importService.js`.
+
 ## Project structure
 
 ```

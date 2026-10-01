@@ -114,7 +114,7 @@ export default function ModuleAnalyticsPage() {
     );
   }
 
-  const weeks = Array.from({ length: data.currentWeek }, (_, i) => i + 1);
+  const weeks = data.hasWeeks === false ? [] : Array.from({ length: data.currentWeek }, (_, i) => i + 1);
   const filterBar = (
     <AnalyticsFilterBar
       modules={modules.data}
@@ -196,7 +196,14 @@ export default function ModuleAnalyticsPage() {
                   tooltip="Lines stop at the current teaching week. Use the sentiment filter to isolate one line."
                 />
                 <div className="p-4 sm:p-5">
-                  <WeeklyTrendChart data={data.weekly} sentiment={filters.sentiment || null} highlightWeek={filters.week ? Number(filters.week) : null} currentWeek={data.currentWeek} />
+                  {data.hasWeeks === false ? (
+                    <p className="rounded-lg bg-slate-50 px-4 py-10 text-center text-sm text-slate-500 ring-1 ring-slate-200">
+                      This dataset has no teaching-week column, so weekly trends cannot be shown.
+                      Map a week column on import to enable trend detection.
+                    </p>
+                  ) : (
+                    <WeeklyTrendChart data={data.weekly} sentiment={filters.sentiment || null} highlightWeek={filters.week ? Number(filters.week) : null} currentWeek={data.currentWeek} />
+                  )}
                 </div>
               </Card>
             </div>
